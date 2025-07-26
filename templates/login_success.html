@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In Sucesscull！</title>
+    <link rel="icon" href="static/picture/unimas_logo.png" type="image/x-icon">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .success-box {
+            background: #fffbe7;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            padding: 40px 60px;
+            text-align: center;
+            animation: pop 0.7s;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.7);}
+            80% { transform: scale(1.05);}
+            100% { transform: scale(1);}
+        }
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 1.2s infinite alternate;
+        }
+        @keyframes bounce {
+            to { transform: translateY(-10px);}
+        }
+        .title {
+            font-size: 2.2rem;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #555;
+        }
+        .btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: #ff9800;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #f57c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <div class="emoji">🎉😎🎊</div>
+        <div class="title">Login Successfull！</div>
+        <div class="subtitle">Welcome to UNIMAS! It's another energetic and vibrant day!<br>You have successfully unlocked the mysterious door 🚪✨  </div>
+    
+    </div>
+    <div class="title" style="color: aliceblue; margin-top: 20px;">Developed By: </div>
+
+    <!-- 新增正方形開發者介紹區塊 -->
+    <div style="width:100%;max-width:800px;margin-top:40px;display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
+        <div style="width:220px;height:140px;background:#ffe0b2;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.07);">
+            <img src="static/picture/patrick.jpg" alt="developer1" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#6d4c41;">PATRICK OWEN KUEK</div>
+            <div style="font-size:0.95rem;color:#8d6e63;">Matric No: 80944</div>
+        </div>
+        <div style="width:180px;height:140px;background:#ffe0b2;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.07);">
+            <img src="static/picture/Andrew.jpg" alt="developer2" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#6d4c41;">WONG GUAN TING</div>
+            <div style="font-size:0.95rem;color:#8d6e63;">Matric No: 81510</div>
+        </div>
+        <div style="width:220px;height:140px;background:#ffe0b2;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.07);">
+            <img src="static/picture/kevin.jpg" alt="developer3" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#6d4c41;">KEVIN WONG KING YOU</div>
+            <div style="font-size:0.95rem;color:#8d6e63;">Matric: 79766</div>
+        </div>
+        <div style="width:220px;height:140px;background:#ffe0b2;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.07);">
+            <img src="static/picture/rebecca.jpg" alt="developer4" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#6d4c41;">REBECCA LAI YEE ENN</div>
+            <div style="font-size:0.95rem;color:#8d6e63;">Matric: 81036</div>
+        </div>
+        <div style="width:300px;height:140px;background:#ffe0b2;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.07);">
+            <img src="static/picture/ibnu.jpg" alt="developer5" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#6d4c41;">IBNU AMEERUL BIN ABDUL HALIM</div>
+            <div style="font-size:0.95rem;color:#8d6e63;">Matric: 78038</div>
+        </div>
+    </div>
+
+</body>
+</html>

